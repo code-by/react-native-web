@@ -200,23 +200,8 @@ describe('modules/createDOMProps', () => {
     expect(props.rel).toMatchSnapshot();
   });
 
-  test('includes reset styles for "a" elements', () => {
-    const props = createDOMProps('a');
-    expect(props.className).toMatchSnapshot();
-  });
-
-  test('includes reset styles for "button" elements', () => {
-    const props = createDOMProps('button');
-    expect(props.className).toMatchSnapshot();
-  });
-
-  test('includes cursor style for "button" role', () => {
+  test('includes cursor style for pressable roles', () => {
     const props = createDOMProps('span', { accessibilityRole: 'button' });
-    expect(props.className).toMatchSnapshot();
-  });
-
-  test('includes reset styles for "ul" elements', () => {
-    const props = createDOMProps('ul');
     expect(props.className).toMatchSnapshot();
   });
 });

@@ -13,40 +13,6 @@ import styleResolver from '../../exports/StyleSheet/styleResolver';
 
 const emptyObject = {};
 
-const resetStyles = StyleSheet.create({
-  ariaButton: {
-    cursor: 'pointer'
-  },
-  button: {
-    appearance: 'none',
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
-    fontStyle: 'inherit',
-    fontVariant: ['inherit'],
-    fontWeight: 'inherit',
-    lineHeight: 'inherit',
-    textAlign: 'inherit'
-  },
-  heading: {
-    fontFamily: 'inherit',
-    fontSize: 'inherit',
-    fontStyle: 'inherit',
-    fontVariant: ['inherit'],
-    fontWeight: 'inherit',
-    lineHeight: 'inherit'
-  },
-  link: {
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    textDecorationLine: 'none'
-  },
-  list: {
-    listStyle: 'none'
-  }
-});
-
 const pointerEventsStyles = StyleSheet.create({
   auto: {
     pointerEvents: 'auto'
@@ -146,19 +112,21 @@ const createDOMProps = (component, props, styleResolver) => {
 
   // STYLE
   // Resolve React Native styles to optimized browser equivalent
-  const reactNativeStyle = [
-    component === 'a' && resetStyles.link,
-    component === 'button' && resetStyles.button,
-    role === 'heading' && resetStyles.heading,
-    component === 'ul' && resetStyles.list,
-    role === 'button' && !disabled && resetStyles.ariaButton,
+  const reactNativeStyle = StyleSheet.compose(
     pointerEvents && pointerEventsStyles[pointerEvents],
-    providedStyle,
-    placeholderTextColor && { placeholderTextColor }
-  ];
+    StyleSheet.compose(
+      providedStyle,
+      placeholderTextColor && { placeholderTextColor }
+    )
+  );
+
   const { className, style } = styleResolver(reactNativeStyle);
   if (className && className.constructor === String) {
     domProps.className = props.className ? `${props.className} ${className}` : className;
+    // style interactive elements for mobule browsers
+    if ((role === 'button' || role === 'link') && !disabled) {
+      domProps.className += ' ui-pressable';
+    }
   }
   if (style) {
     domProps.style = style;

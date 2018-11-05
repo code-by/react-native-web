@@ -65,6 +65,7 @@ class Text extends Component<*> {
       otherProps.onKeyDown = this._createEnterHandler(onPress);
     }
 
+    otherProps.className = 'ui-text';
     // allow browsers to automatically infer the language writing direction
     otherProps.dir = dir !== undefined ? dir : 'auto';
     otherProps.style = [
@@ -98,23 +99,6 @@ class Text extends Component<*> {
 }
 
 const styles = StyleSheet.create({
-  initial: {
-    borderWidth: 0,
-    boxSizing: 'border-box',
-    color: 'inherit',
-    display: 'inline',
-    fontFamily: 'System',
-    fontSize: 14,
-    fontStyle: 'inherit',
-    fontVariant: ['inherit'],
-    fontWeight: 'inherit',
-    lineHeight: 'inherit',
-    margin: 0,
-    padding: 0,
-    textDecorationLine: 'none',
-    whiteSpace: 'pre-wrap',
-    wordWrap: 'break-word'
-  },
   isInAParentText: {
     // inherit parent font styles
     fontFamily: 'inherit',
