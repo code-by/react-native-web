@@ -14,13 +14,12 @@ let instance;
 const styles = StyleSheet.create({
   background: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(128,128,128,0.6)'
+    backgroundColor: 'rgba(0,0,0,0.6)'
   },
   wrapper: {
     ...StyleSheet.absoluteFillObject,
     alignItems: 'center',
-    justifyContent: 'space-around',
-    backgroundColor: 'yellow'
+    justifyContent: 'space-around'
   },
   container: {
     overflow: 'hidden',
@@ -81,6 +80,16 @@ class AlertViewClass extends React.Component {
     }
   };
 
+  _addButtonRef = index => ref => {
+    this[`button_${index}`] = ref;
+  };
+
+  componentDidUpdate() {
+    if (this.state.visible) {
+      this.button_0.focus();
+    }
+  }
+
   render() {
     const { visible, message, title, buttons } = this.state;
     if (!visible) {
@@ -100,6 +109,7 @@ class AlertViewClass extends React.Component {
               <TouchableHighlight
                 key={i}
                 onPress={this.onButtonPress(onPress)}
+                ref={this._addButtonRef(i)}
                 style={[
                   styles.button,
                   i < buttons.length - 1 &&
